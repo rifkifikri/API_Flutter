@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kegiatan_3/screen/home.dart';
+import 'package:lottie/lottie.dart';
 
 void main() {
   runApp(const MyApp());
@@ -49,79 +50,98 @@ class _LoginState extends State<Login> {
          
         child: Form(
           key: _formKey,
-          child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(top: 50),
-                child: Center(
+          child: Center(
+            child: Column(
+              children: [
+                // Padding(
+                //   padding: const EdgeInsets.only(top: 50),
+                //   child: Center(
+                //     child: Container(
+                //       width: 200,
+                //       height: 200,
+                //       decoration: BoxDecoration(
+                //         color: Colors.red,
+                //         borderRadius: BorderRadius.circular(80),
+                //         image: DecorationImage(
+                          
+                //           image: NetworkImage('https://googleflutter.com/sample_image.jpg'),
+                //           fit: BoxFit.fill
+                //         ),
+                //       ),
+                //     ),
+                //   ),
+                // ),
+                 Container(
+                  width: MediaQuery.of(context).size.width * 0.9,
+                  height: MediaQuery.of(context).size.height * 0.5,
+                   child: Lottie.asset("assets/friendly.json",
+                          width: MediaQuery.of(context).size.width * 0.7,
+                          height: MediaQuery.of(context).size.width * 0.7,
+                         ),
+                 ),
+
+                Padding(
+                  padding: const EdgeInsets.only(top: 0),
                   child: Container(
-                    width: 200,
-                    height: 200,
-                    decoration: BoxDecoration(
-                      color: Colors.red,
-                      borderRadius: BorderRadius.circular(80),
-                      image: DecorationImage(
+                    width: MediaQuery.of(context).size.width*0.9,
+                    child: TextFormField(
+                      
+                      keyboardType: TextInputType.emailAddress,
+                      decoration: InputDecoration(
                         
-                        image: NetworkImage('https://googleflutter.com/sample_image.jpg'),
-                        fit: BoxFit.fill
+                        hintText: 'Email',
+                        border: OutlineInputBorder(
+                          borderSide: BorderSide(),
+                          borderRadius: BorderRadius.circular(50)
+                          )
                       ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter your Email';
+                        }
+                        return null;
+                      },
+                    )
                     ),
-                  ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 20),
-                child: Container(
-                  width: MediaQuery.of(context).size.width*0.9,
-                  child: TextFormField(
-                    
-                    keyboardType: TextInputType.emailAddress,
-                    decoration: InputDecoration(
-                      hintText: 'Email',
-                      border: OutlineInputBorder(
-                        borderSide: BorderSide(),
-                        borderRadius: BorderRadius.circular(50)
-                        )
+                Padding(
+                  padding: const EdgeInsets.only(top: 20),
+                  child: Container(
+                    width: MediaQuery.of(context).size.width*0.9,
+                    child: TextFormField(
+                      obscureText: true,
+                      keyboardType: TextInputType.visiblePassword,
+                      decoration: InputDecoration(
+                        hintText: 'Password',
+                        border: OutlineInputBorder(
+                          borderSide: BorderSide(),
+                          borderRadius: BorderRadius.circular(50)
+                          ),
+                        //icon: Icon(Icons.lock,color: Colors.grey,),
+                      ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter your password';
+                        }
+                        return null;
+                      },
+                    )
                     ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter your Email';
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 30),
+                  child: ElevatedButton(
+                    onPressed: (){
+                    if (_formKey.currentState!.validate()) {
+                        
+                        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>MyHome())
+                        );
                       }
-                      return null;
-                    },
-                  )
-                  ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 20),
-                child: Container(
-                  width: MediaQuery.of(context).size.width*0.9,
-                  child: TextFormField(
-                    keyboardType: TextInputType.visiblePassword,
-                    decoration: InputDecoration(
-                      hintText: 'Password',
-                      border: OutlineInputBorder(
-                        borderSide: BorderSide(),
-                        borderRadius: BorderRadius.circular(50)
-                        )
-                    ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter your password';
-                      }
-                      return null;
-                    },
-                  )
-                  ),
-              ),
-              ElevatedButton(onPressed: (){
-                if (_formKey.currentState!.validate()) {
                     
-                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>MyHome()));
-                  }
-                
-              }, child: Text("Submit"))
-            ],
+                  }, child: Text("Submit")),
+                )
+              ],
+            ),
           ),
         )),
   );
