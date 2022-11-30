@@ -38,16 +38,22 @@ Future <Map<String,dynamic>?> getDataUser() async{
     return Scaffold(
       appBar:AppBar(
         title:Text('Home'),
+        backgroundColor: Colors.deepPurple,
       ),
       drawer: Drawer(
         child: ListView(
           children: [
             DrawerHeader(
               decoration: BoxDecoration(
-                color: Theme.of(context).primaryColorLight,
+                color: Colors.deepPurpleAccent,
               ) ,
               child: const Center(
-                child: Text('V20'),
+                child: Text('1462000282_Rifki',
+                style: TextStyle(
+                  fontSize: 20,
+                  color: Colors.white
+                ),
+                ),
               )),
               ListTile(
                 tileColor: Theme.of(context).primaryColorLight,
@@ -65,15 +71,22 @@ Future <Map<String,dynamic>?> getDataUser() async{
       body: FutureBuilder <Map<String,dynamic>?>(
         future: getDataUser(),
         builder: (context, snapshot) {
-          return ListView.builder(
-                    itemCount: 5,
+          if( snapshot.connectionState==ConnectionState.waiting){
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          } else if (snapshot.hasData){
+              return ListView.builder(
+                    itemCount: snapshot.data!.length,
                     itemBuilder: (_, index) {
                       var map = snapshot;
                           print(map);
                       return SizedBox(
                         child: GestureDetector(
                           onTap: () => {
-                            Navigator.push(context, MaterialPageRoute(builder: (context) =>MyProfil(),))
+                            Navigator.push(context, MaterialPageRoute(builder: (context) { return MyProfil(
+                              detail:snapshot.data!['data'][index]
+                            );}))
                           },
                           child: Card(
                             shape: RoundedRectangleBorder(
@@ -118,33 +131,13 @@ Future <Map<String,dynamic>?> getDataUser() async{
                       
                       //Text("${snapshot.data!['data'][index]['email']}");
                      });
-          
-          //Text("${snapshot.data!['data'][1]['email']}");
+          }else{
+            return Text('ERROR');
+          }
         },
-      //   builder: (_, snapshot) {
-      //   return ListView.builder(
-      //               itemCount: 3,
-      //               itemBuilder: (_, index) {
-      //                 var map = snapshot;
-      //                     print(map);
-      //                 return Text('email');
-      //               });
-
-      // },
       ),
-      // body: ListView.builder(
-      //    itemCount: 1,
-      //   // //itemCount: items.length,
-      //   // itemBuilder: (context, index) {
-      //   //   return ListTile(
-      //   //     title: Text('Halooo'),
-      //   //     //title: Text('${items[index]}'),
-      //   //   );
-      //   // },
-      //   itemBuilder: (context, index) {
-      //     return 
-      //   },
-      // ),
     );
   }
 }
+//tanda seru digunakan untuk mengantisipasi error
+//tnnda tanya digunakan untuk variabel jika di gunakan di kemudian hari

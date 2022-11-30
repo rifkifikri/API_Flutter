@@ -45,6 +45,7 @@ class _LoginState extends State<Login> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Login Page'),
+        backgroundColor: Colors.deepPurple,
       ),
       body: SingleChildScrollView(
          
@@ -53,45 +54,29 @@ class _LoginState extends State<Login> {
           child: Center(
             child: Column(
               children: [
-                // Padding(
-                //   padding: const EdgeInsets.only(top: 50),
-                //   child: Center(
-                //     child: Container(
-                //       width: 200,
-                //       height: 200,
-                //       decoration: BoxDecoration(
-                //         color: Colors.red,
-                //         borderRadius: BorderRadius.circular(80),
-                //         image: DecorationImage(
-                          
-                //           image: NetworkImage('https://googleflutter.com/sample_image.jpg'),
-                //           fit: BoxFit.fill
-                //         ),
-                //       ),
-                //     ),
-                //   ),
-                // ),
+                
                  Container(
-                  width: MediaQuery.of(context).size.width * 0.9,
-                  height: MediaQuery.of(context).size.height * 0.5,
-                   child: Lottie.asset("assets/friendly.json",
+                  width: MediaQuery.of(context).size.width * 0.4,
+                  height: MediaQuery.of(context).size.height * 0.4,
+                   child: Lottie.asset("assets/profileLoader.json",
                           width: MediaQuery.of(context).size.width * 0.7,
                           height: MediaQuery.of(context).size.width * 0.7,
                          ),
                  ),
 
                 Padding(
-                  padding: const EdgeInsets.only(top: 0),
+                  padding: const EdgeInsets.only(top: 50),
                   child: Container(
                     width: MediaQuery.of(context).size.width*0.9,
                     child: TextFormField(
                       
                       keyboardType: TextInputType.emailAddress,
                       decoration: InputDecoration(
-                        
+                        prefixIcon: Icon(Icons.mail),
                         hintText: 'Email',
                         border: OutlineInputBorder(
-                          borderSide: BorderSide(),
+                          
+                          borderSide: BorderSide(color: Colors.deepPurple,),
                           borderRadius: BorderRadius.circular(50)
                           )
                       ),
@@ -112,11 +97,17 @@ class _LoginState extends State<Login> {
                       obscureText: true,
                       keyboardType: TextInputType.visiblePassword,
                       decoration: InputDecoration(
+                        prefixIcon: Icon(Icons.lock),
                         hintText: 'Password',
                         border: OutlineInputBorder(
-                          borderSide: BorderSide(),
-                          borderRadius: BorderRadius.circular(50)
+                          borderSide: BorderSide(
+                            color: Colors.deepPurple,
+                            width: 3
                           ),
+                          borderRadius: BorderRadius.circular(50),
+                          
+                          ),
+                          
                         //icon: Icon(Icons.lock,color: Colors.grey,),
                       ),
                       validator: (value) {
@@ -131,14 +122,21 @@ class _LoginState extends State<Login> {
                 Padding(
                   padding: const EdgeInsets.only(top: 30),
                   child: ElevatedButton(
-                    onPressed: (){
-                    if (_formKey.currentState!.validate()) {
-                        
-                        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>MyHome())
-                        );
-                      }
                     
-                  }, child: Text("Submit")),
+                      onPressed: (){
+                      if (_formKey.currentState!.validate()) {
+                          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>MyHome())
+                          );
+                        }
+                      
+                    }, child: Text("Submit"),
+                    style: ButtonStyle(
+                      
+                      backgroundColor: MaterialStateProperty.all(Colors.deepPurple),
+                      overlayColor: MaterialStateProperty.all(Color.fromARGB(255, 179, 154, 223)),
+                    ),
+                  ),
+                  
                 )
               ],
             ),
