@@ -1,153 +1,72 @@
 
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:http/http.dart' as http;
 
-class MyProfil extends StatefulWidget {
-   MyProfil({Key? key, required this.detail}) : super(key: key);
-
-  var detail;
-
-  @override
-  State<MyProfil> createState() => _MyProfilState();
-}
-
-class _MyProfilState extends State<MyProfil> {
-
-  Future <Map<String,dynamic>?> getDataUser() async {
-    Uri url = Uri.parse('https://reqres.in/api/users?page=2');
-
-    var response = await http.get(url);
-    print(response.statusCode);
-
-  if(response.statusCode!=200){
-    print('user not found');
-    return null;
-  }else{
-
-    return json.decode(response.body) as Map<String,dynamic>;
-  }
-  }
-  
+class MyProfill extends StatelessWidget {
+  const MyProfill({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar:AppBar(
-        title: Text('My Profill'),
-        centerTitle: true,
-        backgroundColor: Colors.deepPurple,
-      ),
-      body: FutureBuilder <Map<String,dynamic>?>(
-        future: getDataUser(),
-        builder:(context, snapshot) {
-            if(snapshot.connectionState==ConnectionState.waiting){
-              return Center(child: LinearProgressIndicator());
-            }else if(snapshot.hasData){
-              return SingleChildScrollView(
-            child: Container(
-              decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topRight,
-                    end: Alignment.bottomLeft,
-                    colors: [
-                      Colors.blue,
-                      Colors.red,
-                    ],
-                  )
-                ),
-              height: MediaQuery.of(context).size.height*1,
-              child: Center(
-                child: Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(top: 20),
-                      child: Container(
-                        child: Column(
-                          children: [
-                            CircleAvatar(
-                              backgroundImage: NetworkImage(widget.detail['avatar']),
-                              minRadius: 50,
-                              maxRadius: 75,
-                            )
-                          ],
+   return Scaffold(
+    appBar: AppBar(
+      title: Text('MyProfil'),
+      centerTitle: true,
+        backgroundColor: Colors.redAccent,
+    ),
+    body: Center(
+      child: Container(
+        height: MediaQuery.of(context).size.height*1,
+        width: MediaQuery.of(context).size.width*1,
+        decoration: BoxDecoration(
+          color: Color.fromARGB(255, 166, 213, 251)
+        ),
+        child: Column(       
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(top: 20),
+              child: CircleAvatar(
+                    backgroundImage: AssetImage('assets/potoku.jpeg'),
+                    minRadius: 50,
+                    maxRadius: 75,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 20),
+              child: Container(
+                width: MediaQuery.of(context).size.width*0.8,
+                height: MediaQuery.of(context).size.height*0.5,
+                child: Card(
+                  shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15.0),
+                  ),
+                  color: Color.fromARGB(255, 131, 196, 250).withOpacity(0.5),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Text('Nama : Muhammad Rifki Fikri Firdaus',
+                        style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
                         ),
-                      ),
+                        Text('NIM : 1462000282',
+                        style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),),
+                        Text('Tempat/TGL Lahir : Mojokerto/30 Maret 2001',
+                        style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),),
+                        Text('IPK : 3.78',
+                        style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),)
+                      ],
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 20),
-                      child: Container(
-                        height: MediaQuery.of(context).size.height*0.5,
-                        width: MediaQuery.of(context).size.width*0.7,
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            begin: Alignment.bottomRight,
-                            end:  Alignment.topLeft,
-                            colors: [
-                              Colors.blue,
-                              Colors.red,
-                            ],
-                          ),
-                          borderRadius: BorderRadius.only(
-                            topRight: Radius.circular(50),
-                            bottomLeft: Radius.circular(50),
-                            topLeft: Radius.circular(50),
-                            bottomRight: Radius.circular(50)
-                          ),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Text(' First Name : ${widget.detail['first_name']}',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold
-                              ),
-                              ),
-                              Text(' Last Name : ${widget.detail['last_name']}',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold
-                              ),
-                              ),
-                              Text(' Full Name : ${widget.detail['first_name']} ${widget.detail['last_name']}',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold
-                              ),
-                              ),
-                              Text(' Email : ${widget.detail['email']}',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold
-                              ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
               ),
             )
-            );
-            }else{
-              return Text('ERROR');
-            }
             
-          }
+          ],
+        ),
       ),
-    );
+    ),
+   ); 
   }
 }
